@@ -17,6 +17,9 @@ from frmnewproject import FrmNewProject
 from frmmanagecroptypes import FrmManageCropTypes
 from frmproject_edit import FrmEditProject
 from frmproject_configure import FrmConfigureProject
+from frmhousehold_edit_getid import FrmEditHouseholdGetID
+from frmhousehold_data import FrmHouseholdData
+from frmhouseholds import FrmHouseholds
 from frmmanagefoodtypes import FrmManageFoodTypes
 from frmhousehold_add import FrmAddHousehold
 from frmhousecharacteristics import FrmHouseCharacteristics
@@ -45,6 +48,9 @@ class FrmMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.connect(self.actionNew_Project, QtCore.SIGNAL("triggered()"), self.newProject)
         self.connect(self.actionEdit_Project, QtCore.SIGNAL("triggered()"), self.editProject)
         self.connect(self.actionConfigure_Project, QtCore.SIGNAL("triggered()"), self.configureProject)
+        self.connect(self.actionOpen_Household, QtCore.SIGNAL("triggered()"), self.editProjectHousehold)
+        self.connect(self.actionHousehold_Data, QtCore.SIGNAL("triggered()"), self.viewHouseholdData)
+        self.connect(self.actionView_All_Households, QtCore.SIGNAL("triggered()"), self.viewAllHouseholds)
 
 
         QtCore.QObject.connect(self.actionCrop_Types, QtCore.SIGNAL("triggered()"), self.manageCropTypes)
@@ -74,7 +80,7 @@ class FrmMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         form.show()
         
     def configureProject(self):
-        ''' Creates and Shows the Edit Project form '''
+        ''' Creates and Shows the Configure Project form '''
         form = FrmConfigureProject(self.mdi)
         subWin = self.mdi.addSubWindow(form)
         self.centerSubWindow(subWin)
@@ -88,6 +94,27 @@ class FrmMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         subWin = self.mdi.addSubWindow(self.form)
         self.centerSubWindow(subWin)
         self.form.show()
+        
+    def editProjectHousehold(self):
+        ''' Creates and Shows the Edit Household GetID form '''
+        form = FrmEditHouseholdGetID(self)
+        subWin = self.mdi.addSubWindow(form)
+        self.centerSubWindow(subWin)
+        form.show()
+        
+    def viewHouseholdData(self):
+        ''' shows household data (expenditure, income, assets, etc) '''
+        form = FrmHouseholdData(self.mdi)
+        subWin = self.mdi.addSubWindow(form)
+        self.centerSubWindow(subWin)
+        form.show()
+        
+    def viewAllHouseholds(self):
+        ''' shows all households '''
+        form = FrmHouseholds(self)
+        subWin = self.mdi.addSubWindow(form)
+        self.centerSubWindow(subWin)
+        form.show()
 
     def manageCropTypes(self):
         ''' Creates and Shows the Manage Crop Types form'''

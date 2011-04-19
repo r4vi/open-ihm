@@ -109,6 +109,7 @@ class FrmMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.projectid = -1
         self.projectname = ""
 
+        pixmap = QtGui.QPixmap('resources/images/EfDUnimaChancoComposite.jpg')
 #        pixmap = QtGui.QPixmap('resources/images/EfDChancoComposite.jpg')
 #        self.mdi = PicturedMDIArea(pixmap)
         self.mdi = QtGui.QMdiArea()

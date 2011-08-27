@@ -96,7 +96,7 @@ class DatabaseInitialiser:
          db = Connect(**dbinfo)             
          cursor = db.cursor()
          
-         query = "SHOW TABLES"
+         query = "SHOW COLUMNS FROM householdmembers"
          
          cursor.execute(query)
          rows = cursor.fetchall()
@@ -106,7 +106,8 @@ class DatabaseInitialiser:
          
          upToDate = False
          for row in rows:
-             if row[0] == "transferlog":
+             for field in row:
+                 if field == "yearofbirth":
                      upToDate = True
          
          return upToDate

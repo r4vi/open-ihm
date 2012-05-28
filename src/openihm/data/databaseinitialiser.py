@@ -74,7 +74,8 @@ class DatabaseInitialiser:
          except ( errors.OperationalError,  errors.ProgrammingError) as e:
              dbinstalled = self.createDatabase()
              
-         if ( dbinstalled ):
+         dbuptodate = False
+         if ( mysqlstarted and dbinstalled ):
                  dbuptodate = self.updateDatabase()
                  self.insertStartupCrops()
 
@@ -132,9 +133,17 @@ class DatabaseInitialiser:
                  cursor.execute(query)
                  rows = cursor.fetchall()
                  
-                 for row in rows:
-                     if row[0] > self.latestupdatestring:
-                         upToDate = True
+                 if len(rows) != 0:
+                     for row in rows:
+                         if row[0] > self.latestupdatestring:
+                             upToDate = True
+                 else:
+                     updatestr = "latest update on %s" % (date.today().isoformat())       
+                     query = "INSERT INTO dbupdate VALUES('%s')" % updatestr
+                     cursor.execute(query)
+                     db.commit()
+                     
+                     upToDate = True
                          
          cursor.close()
          db.close()
